@@ -2,6 +2,7 @@ package
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Tilemap;
+	import net.flashpunk.FP;
 	
 	/**
 	 * ...
@@ -9,6 +10,9 @@ package
 	 */
 	public class Overlay extends Entity 
 	{
+		var tilex:int;
+		var tiley:int;
+		
 		[Embed(source = '../images/overlaytiles.png')]
 		private const overlaytiles:Class;
 		
@@ -29,10 +33,27 @@ package
 			graphic = tilemap;
 		}
 		
-		
+		override public function update():void
+		{
+			var mousex = FP.world.mouseX;
+			var mousey = FP.world.mouseY;
+			if (mousex < 400 && mousey < 400)
+			{
+				
+				activateTile(Math.floor(mousex / 40), Math.floor(mousey / 40));
+			}
+		}
 		
 		private function activateTile(posx:int, posy:int)
 		{
+			if (tilex != posx || tiley != posy)
+			{
+				tilemap.clearTile(tilex,tiley);
+				tilemap.setTile(tilex, tiley, 0);
+			}
+			tilex = posx;
+			tiley = posy;
+			tilemap.clearTile(posx,posy);
 			tilemap.setTile(posx, posy, 1);
 			graphic = tilemap;
 		}
