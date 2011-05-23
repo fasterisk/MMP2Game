@@ -1,8 +1,7 @@
 package 
 {
 	import net.flashpunk.Entity;
-	import net.flashpunk.graphics.Spritemap;
-	import net.flashpunk.graphics.TiledSpritemap;
+	import net.flashpunk.graphics.Tilemap;
 	
 	/**
 	 * ...
@@ -13,15 +12,29 @@ package
 		[Embed(source = '../images/overlaytiles.png')]
 		private const overlaytiles:Class;
 		
-		private var spritemap:Spritemap;
+		private var tilemap:Tilemap;
 	
-		public function Overlay(posx:int, posy:int):void
+		public function Overlay():void
 		{
-			spritemap = new Spritemap(overlaytiles, 40, 40);
-			spritemap.add("normal", [0], 20, true);
-			spritemap.play("normal");
-			graphic = spritemap;
-			moveTo(posx, posy);
+			tilemap = new Tilemap(overlaytiles, 400, 400, 40, 40);
+			
+			for (var i:int = 0; i < 10; i++)
+			{
+				for (var j:int = 0; j < 10; j++)
+				{
+					tilemap.setTile(i, j, 0);
+				}
+			}
+			
+			graphic = tilemap;
+		}
+		
+		
+		
+		private function activateTile(posx:int, posy:int)
+		{
+			tilemap.setTile(posx, posy, 1);
+			graphic = tilemap;
 		}
 	}
 	
