@@ -12,6 +12,7 @@ package
 	public class Hideout extends Entity 
 	{
 		private var dragging:Boolean;
+		public var insideField:Boolean;
 		
 		[Embed(source = '../images/hideouttiles.png')]
 		private const tiles:Class;
@@ -31,7 +32,7 @@ package
 		
 		public function Hideout(size:int):void
 		{
-			
+			insideField = false;
 			ttype = size;
 			dragging = false;
 			switch(size)
@@ -156,6 +157,8 @@ package
 				{
 					y -= diffY;
 				}
+				
+				checkInsideField();
 			}
 			
 			offsetX = mousex - x;
@@ -283,6 +286,20 @@ package
 		public function getY2():int
 		{
 			return y + theight;
+		}
+		
+		private function checkInsideField():void
+		{
+			var x2:int = getX2();
+			var y2:int = getY2();
+			if (x >= 0 && x2 <= 400 && y >= 0 && y2 <= 400)
+			{
+				insideField = true;
+			}
+			else
+			{
+				insideField = false;
+			}
 		}
 	}
 }
