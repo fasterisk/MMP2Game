@@ -35,8 +35,8 @@ package
 		
 		override public function update():void
 		{
-			var mousex = FP.world.mouseX;
-			var mousey = FP.world.mouseY;
+			var mousex:int = FP.world.mouseX;
+			var mousey:int = FP.world.mouseY;
 			if (mousex < 400 && mousey < 400)
 			{
 				
