@@ -43,6 +43,13 @@ package
 			add(hideout4);
 			add(hideout5);
 			add(hideout6);
+			
+			hideout2.rotate();
+			hideout3.rotate();
+			hideout4.rotate();
+			hideout5.rotate();
+			hideout6.rotate();
+			
 		}
 	}
 	

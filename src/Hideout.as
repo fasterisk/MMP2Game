@@ -20,12 +20,16 @@ package
 		
 		private var twidth:int;
 		private var theight:int;
+		private var ttype:int;
+		private var horizontal:Boolean;
 		
 		var offsetX:int;
 		var offsetY:int;
 		
 		public function Hideout(size:int):void
 		{
+			
+			ttype = size;
 			dragging = false;
 			switch(size)
 			{
@@ -35,6 +39,7 @@ package
 					tilemap = new Tilemap(tiles, twidth, theight, 40, 40);
 					tilemap.setTile(0, 0, 0);
 					tilemap.setTile(0, 1, 3);
+					horizontal = false;
 					break;
 				case 3:
 					twidth = 40;
@@ -43,6 +48,7 @@ package
 					tilemap.setTile(0, 0, 0);
 					tilemap.setTile(0, 1, 18);
 					tilemap.setTile(0, 2, 3);
+					horizontal = false;
 					break;
 				case 4:
 					twidth = 80;
@@ -62,6 +68,7 @@ package
 					tilemap.setTile(0, 2, 18);
 					tilemap.setTile(0, 3, 8);
 					tilemap.setTile(0, 4, 3);
+					horizontal = false;
 					break;
 				case 6:
 					twidth = 120;
@@ -73,6 +80,7 @@ package
 					tilemap.setTile(0, 1, 6);
 					tilemap.setTile(1, 1, 9);
 					tilemap.setTile(2, 1, 7);
+					horizontal = true;
 					break;
 			}
 			
@@ -113,8 +121,6 @@ package
 			if(Input.mouseReleased && dragging)
 			{
 				dragging = false;
-				//var centrex:int = (x2 + x)/2;
-				//var centrey:int = (y2 + y)/2;
 				var diffX:int = x % 40;
 				var diffY:int = y % 40;
 				
@@ -137,8 +143,97 @@ package
 			
 			offsetX = mousex - x;
 			offsetY = mousey - y;
-			
-			
+		}
+		
+		public function rotate():void
+		{
+			var temp:int = twidth;
+			twidth = theight;
+			theight = temp;
+			switch(ttype)
+			{
+				case 2:
+					tilemap = new Tilemap(tiles, twidth, theight, 40, 40);
+					if (horizontal)
+					{
+						tilemap.setTile(0, 0, 0);
+						tilemap.setTile(0, 1, 3);
+						horizontal = false;
+					}
+					else
+					{
+						tilemap.setTile(0, 0, 2);
+						tilemap.setTile(1, 0, 1);
+						horizontal = true;
+					}
+					graphic = tilemap;
+					break;
+				case 3:
+					tilemap = new Tilemap(tiles, twidth, theight, 40, 40);
+					if (horizontal)
+					{
+						tilemap.setTile(0, 0, 0);
+						tilemap.setTile(0, 1, 18);
+						tilemap.setTile(0, 2, 3);
+						horizontal = false;
+					}
+					else
+					{
+						tilemap.setTile(0, 0, 2);
+						tilemap.setTile(1, 0, 9);
+						tilemap.setTile(2, 0, 1);
+						horizontal = true;
+					}
+					graphic = tilemap;
+					break;
+				case 4:break;
+				case 5:
+					tilemap = new Tilemap(tiles, twidth, theight, 40, 40);
+					if (horizontal)
+					{
+						tilemap.setTile(0, 0, 0);
+						tilemap.setTile(0, 1, 8);
+						tilemap.setTile(0, 2, 18);
+						tilemap.setTile(0, 3, 8);
+						tilemap.setTile(0, 4, 3);
+						horizontal = false;
+					}
+					else
+					{
+						tilemap.setTile(0, 0, 2);
+						tilemap.setTile(1, 0, 8);
+						tilemap.setTile(2, 0, 9);
+						tilemap.setTile(3, 0, 8);
+						tilemap.setTile(4, 0, 1);
+						horizontal = true;
+					}
+					graphic = tilemap;
+					break;
+				case 6:
+					tilemap = new Tilemap(tiles, twidth, theight, 40, 40);
+					if (horizontal)
+					{
+						tilemap.setTile(0, 0, 4);
+						tilemap.setTile(0, 1, 18);
+						tilemap.setTile(0, 2, 6);
+						tilemap.setTile(1, 0, 5);
+						tilemap.setTile(1, 1, 8);
+						tilemap.setTile(1, 2, 7);
+						horizontal = false;
+					}
+					else
+					{
+						tilemap.setTile(0, 0, 4);
+						tilemap.setTile(1, 0, 8);
+						tilemap.setTile(2, 0, 5);
+						tilemap.setTile(0, 1, 6);
+						tilemap.setTile(1, 1, 9);
+						tilemap.setTile(2, 1, 7);
+						horizontal = true;
+					}
+					graphic = tilemap;
+					break;
+			}
 		}
 	}
 }
