@@ -100,7 +100,7 @@ package
 		{
 			super.update();
 			
-			for (var i:int = 0; i < hideouts.length; i++)
+			/*for (var i:int = 0; i < hideouts.length; i++)
 			{
 				for (var j:int = 0; j < hideouts.length; j++)
 				{
@@ -120,7 +120,7 @@ package
 						}
 					}
 				}
-			}
+			}*/
 			if (phase == 1)
 			{
 				checkPositions(); 

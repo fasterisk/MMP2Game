@@ -119,7 +119,7 @@ package
 			if (mousex >= x && mousex <= x2 && mousey >= y && mousey <= y2)
 			{
 				inside = true;
-			}	
+			}
 		
 			if(Input.mousePressed && !dragging && inside)
 			{
