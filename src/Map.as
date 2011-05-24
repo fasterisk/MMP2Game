@@ -103,5 +103,19 @@ package
 			return image;
 		}
 		
+		public function placeHideouts(hideouts:Array, player:int):void
+		{
+			for (var i:int = 0; i < hideouts.length; i++)
+			{
+				for (var j:int = 0; j < hideouts[i].twidth / 40; j++)
+				{
+					for (var k:int = 0; k < hideouts[i].theight / 40; k++)
+					{
+						setPoint(player, 1, hideouts[i].getX() / 40+j, hideouts[i].getY() / 40+k);
+					}
+				}
+			}
+		}
+		
 	}
 }

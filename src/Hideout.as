@@ -11,6 +11,8 @@ package
 	 */
 	public class Hideout extends Entity 
 	{
+		
+		public var lock:Boolean;
 		private var dragging:Boolean;
 		public var insideField:Boolean;
 		
@@ -22,8 +24,8 @@ package
 		private var startX:int;
 		private var startY:int;
 		
-		private var twidth:int;
-		private var theight:int;
+		public var twidth:int;
+		public var theight:int;
 		private var ttype:int;
 		private var horizontal:Boolean;
 		
@@ -32,6 +34,7 @@ package
 		
 		public function Hideout(size:int):void
 		{
+			lock = false;
 			insideField = false;
 			ttype = size;
 			dragging = false;
@@ -94,6 +97,11 @@ package
 	
 		override public function update():void
 		{
+			if (lock)
+			{
+				return;
+			}
+			
 			var x2:int = x + twidth;
 			var y2:int = y + theight;
 			

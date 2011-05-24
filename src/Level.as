@@ -12,6 +12,8 @@ package
 	public class Level extends World 
 	{
 		
+		private var phase:int;
+		
 		[Embed(source = '../fonts/SPEENS.TTF', embedAsCFF = "false", fontFamily = 'speedball2')]
 		private const JUMP_FONT:Class;
 
@@ -27,6 +29,7 @@ package
 		
 		public function Level():void
 		{
+			phase = 1;
 			confirm1 = false;
 			
 			var random:int = Math.round(Math.random() * 5 + 1);
@@ -93,12 +96,21 @@ package
 		override public function update():void
 		{
 			super.update();
+			if (phase == 1)
+			{
+				checkPositions(); 
+			}
+		}
+		
+		private function checkPositions():void
+		{
 			var allinside:Boolean = true;
 			for (var i:int = 0; i < hideouts.length; i++)
 			{
-				var hideout = hideouts[i];
+				var hideout:Hideout = hideouts[i];
 				allinside = allinside && hideout.insideField;
 			}
+			
 			if (allinside)
 			{
 				if (!confirm1)
@@ -114,7 +126,15 @@ package
 					{
 						if (Input.mousePressed)
 						{
-							trace("CONFIRMED");
+							for (var i:int = 0; i < hideouts.length; i++)
+							{
+								hideouts[i].lock = true;
+							}
+							map.placeHideouts(hideouts, 1);
+							map.printArray1();
+							remove(confirm);
+							phase = 2;
+							setTypes();
 						}
 					}
 				}
@@ -124,6 +144,12 @@ package
 				remove(confirm);
 				confirm1 = false;
 			}
+		}
+		
+		private function setTypes():void
+		{
+			remove(shippart);
+			trace("slödkfjdsfjlk");
 		}
 	}
 	
