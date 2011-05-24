@@ -23,6 +23,10 @@ package
 			
 			add(overlay);
 			
+			var shippart:ShipPart = new ShipPart();
+			shippart.moveTo(0, 400);
+			add(shippart);
+			
 			
 		}
 	}
