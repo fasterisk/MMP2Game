@@ -23,8 +23,8 @@ package
 		private var ttype:int;
 		private var horizontal:Boolean;
 		
-		var offsetX:int;
-		var offsetY:int;
+		private var offsetX:int;
+		private var offsetY:int;
 		
 		public function Hideout(size:int):void
 		{
@@ -139,6 +139,20 @@ package
 					
 				x = x - (x % 40);
 				y = y - (y % 40);
+				
+				x2 = x + twidth;
+				y2 = y + theight;
+				
+				diffX = x2 - 600;
+				diffY = y2 - 600;
+				if (diffX > 0)
+				{
+					x -= diffX;
+				}
+				if (diffY > 0)
+				{
+					y -= diffY;
+				}
 			}
 			
 			offsetX = mousex - x;
@@ -234,6 +248,16 @@ package
 					graphic = tilemap;
 					break;
 			}
+		}
+		
+		public function getX():int
+		{
+			return x;
+		}
+		
+		public function getY():int
+		{
+			return y;
 		}
 	}
 }

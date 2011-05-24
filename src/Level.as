@@ -23,10 +23,6 @@ package
 			
 			add(overlay);
 			
-			var shippart:ShipPart = new ShipPart();
-			shippart.moveTo(0, 400);
-			add(shippart);
-			
 			var hideout2:Hideout = new Hideout(2);
 			hideout2.moveTo(0, 400);
 			var hideout3:Hideout = new Hideout(3);
@@ -37,6 +33,13 @@ package
 			hideout5.moveTo(160, 400);
 			var hideout6:Hideout = new Hideout(6);
 			hideout6.moveTo(240, 440);
+			
+			var hideouts:Array = new Array(hideout2, hideout3, hideout4, hideout5, hideout6);
+			
+			var shippart:ShipPart = new ShipPart(hideouts);
+			shippart.moveTo(0, 400);
+			add(shippart);
+			
 			
 			add(hideout2);
 			add(hideout3);
