@@ -52,7 +52,7 @@ package
 			
 		}
 		
-		public function setPoint(player:int, type:int, posx:int, posy:int)
+		public function setPoint(player:int, type:int, posx:int, posy:int):void
 		{
 			switch(player)
 			{
@@ -61,13 +61,14 @@ package
 			}
 		}
 		
-		public function getPoint(player:int, posx:int, posy:int)
+		public function getPoint(player:int, posx:int, posy:int):int
 		{
 			switch(player)
 			{
 				case 1: return array1[posx][posy];
 				case 2: return array2[posx][posy];
 			}
+			return 0;
 		}
 		
 		public function printArray1():void 
@@ -101,6 +102,45 @@ package
 		public function getImage():Image
 		{
 			return image;
+		}
+		
+		public function placeHideouts(hideouts:Array, player:int):void
+		{
+			for (var i:int = 0; i < hideouts.length; i++)
+			{
+				for (var j:int = 0; j < hideouts[i].twidth / 40; j++)
+				{
+					for (var k:int = 0; k < hideouts[i].theight / 40; k++)
+					{
+						setPoint(player, -1, hideouts[i].getX() / 40+j, hideouts[i].getY() / 40+k);
+					}
+				}
+			}
+		}
+		
+		public function checkTiles(player:int):Boolean
+		{
+			for (var i:int = 0; i < 10; i++)
+			{
+				for (var j:int = 0; j < 10; j++)
+				{
+					if (player == 1)
+					{
+						if (array1[i][j] == -1)
+						{
+							return false;
+						}
+					}
+					if (player == 2)
+					{
+						if (array2[i][j] == -1)
+						{
+							return false;
+						}
+					}
+				}
+			}
+			return true;
 		}
 		
 	}

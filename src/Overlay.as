@@ -10,8 +10,8 @@ package
 	 */
 	public class Overlay extends Entity 
 	{
-		var tilex:int;
-		var tiley:int;
+		private var tilex:int;
+		private var tiley:int;
 		
 		[Embed(source = '../images/overlaytiles.png')]
 		private const overlaytiles:Class;
@@ -47,7 +47,7 @@ package
 			}
 		}
 		
-		private function activateTile(posx:int, posy:int)
+		private function activateTile(posx:int, posy:int):void
 		{
 			if (tilex != posx || tiley != posy)
 			{
