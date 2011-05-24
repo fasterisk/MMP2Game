@@ -14,6 +14,7 @@ package
 	{
 		const SPLASHBGCOLOR:uint = 0xFFa9a3a3;
 		const BACKGRNDCOLOR:uint = 0xFFFBB917;
+		const SPLASHDURATION:Number = 10000;
 				
 		[Embed(source = '../fonts/SPEENS.TTF', embedAsCFF = "false", fontFamily = 'speedball2')]
 		private const SPEEDBALL2_FONT:Class;
@@ -30,7 +31,7 @@ package
 			trace("startSplash");
 			FP.world = new SplashLevel;
 			FP.screen.color = SPLASHBGCOLOR;
-			var myTimer:Timer = new Timer(10000, 1);
+			var myTimer:Timer = new Timer(SPLASHDURATION, 1);
 			myTimer.addEventListener("timer", startGame); 
 			myTimer.start();
 			
