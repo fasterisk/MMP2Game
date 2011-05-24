@@ -2,6 +2,7 @@ package
 {
 	import net.flashpunk.graphics.Image;
 	import Math;
+	
 		
 	public class Map
 	{
@@ -47,6 +48,8 @@ package
 				array1[i] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 				array2[i] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 			}
+			
+			
 		}
 		
 		public function setPoint(player:int, type:int, posx:int, posy:int)
