@@ -149,7 +149,7 @@ package
 		private function setTypes():void
 		{
 			remove(shippart);
-			trace("slödkfjdsfjlk");
+			
 		}
 	}
 	
