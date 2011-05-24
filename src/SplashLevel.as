@@ -29,9 +29,9 @@ package
 			slogan2 = new MyText("before he finds yours!", 200, 82, 0xFF000000, 20);
 			add(slogan1);
 			add(slogan2);
-			slogan3 = new MyText("The Battleship-Game on land with landcover validation.", 120, 580, 0xFF000000, 16);
+			slogan3 = new MyText("The Battleship-Game on land with landcover validation.", 120, 570, 0xFF000000, 16);
 			add(slogan3);
-			addGraphic(new Image(ACHMED), 1, 100, 100);
+			addGraphic(new Image(ACHMED), 1, 120, 100);
 			
 
 			
