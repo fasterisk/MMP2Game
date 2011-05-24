@@ -65,17 +65,17 @@ package
 			addGraphic(gameStatus2);
 			
 			var hideout2:Hideout = new Hideout(2);
-			hideout2.moveTo(0, 400);
+			hideout2.moveTo(0, 560);
 			var hideout3:Hideout = new Hideout(3);
-			hideout3.moveTo(80, 400);
+			hideout3.moveTo(0, 480);
 			var hideout4:Hideout = new Hideout(4);
-			hideout4.moveTo(0, 520);
+			hideout4.moveTo(320, 400);
 			var hideout5:Hideout = new Hideout(5);
-			hideout5.moveTo(160, 400);
+			hideout5.moveTo(0, 400);
 			var hideout6:Hideout = new Hideout(6);
-			hideout6.moveTo(240, 440);
+			hideout6.moveTo(200, 520);
 			
-			hideouts = new Array(hideout2, hideout3, hideout4, hideout5, hideout6);
+			hideouts = new Array(hideout5, hideout6);// , hideout4, hideout5, hideout6);
 			
 			shippart = new ShipPart(hideouts);
 			shippart.moveTo(0, 400);
@@ -99,6 +99,28 @@ package
 		override public function update():void
 		{
 			super.update();
+			
+			for (var i:int = 0; i < hideouts.length; i++)
+			{
+				for (var j:int = 0; j < hideouts.length; j++)
+				{
+					if (i != j && j > i)
+					{
+						var h1:Hideout = hideouts[i];
+						var h2:Hideout = hideouts[j];
+						
+						if (h1.getEndX2() < h2.getX() || h1.getEndX() > h2.getX2()
+						 || h1.getEndY2() < h2.getY() || h1.getEndY() > h2.getY2())
+						{
+							
+						}
+						else
+						{
+							h1.reset();
+						}
+					}
+				}
+			}
 			if (phase == 1)
 			{
 				checkPositions(); 

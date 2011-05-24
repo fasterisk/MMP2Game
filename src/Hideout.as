@@ -23,6 +23,8 @@ package
 		
 		private var startX:int;
 		private var startY:int;
+		private var endX:int;
+		private var endY:int;
 		
 		public var twidth:int;
 		public var theight:int;
@@ -121,6 +123,8 @@ package
 		
 			if(Input.mousePressed && !dragging && inside)
 			{
+				startX = x;
+				startY = y;
 				dragging = true;
 			}
 
@@ -165,6 +169,8 @@ package
 				{
 					y -= diffY;
 				}
+				endX = x;
+				endY = y;
 				
 				checkInsideField();
 			}
@@ -286,6 +292,16 @@ package
 			return y;
 		}
 		
+		public function getEndX():int
+		{
+			return endX;
+		}
+		
+		public function getEndY():int
+		{
+			return endY;
+		}
+		
 		public function getX2():int
 		{
 			return x + twidth;
@@ -294,6 +310,16 @@ package
 		public function getY2():int
 		{
 			return y + theight;
+		}
+		
+		public function getEndX2():int
+		{
+			return endX + twidth;
+		}
+		
+		public function getEndY2():int
+		{
+			return endY+theight;
 		}
 		
 		private function checkInsideField():void
@@ -308,6 +334,12 @@ package
 			{
 				insideField = false;
 			}
+		}
+		
+		public function reset():void
+		{
+			x = startX;
+			y = startY;
 		}
 	}
 }
