@@ -52,7 +52,7 @@ package
 			
 		}
 		
-		public function setPoint(player:int, type:int, posx:int, posy:int)
+		public function setPoint(player:int, type:int, posx:int, posy:int):void
 		{
 			switch(player)
 			{
@@ -61,13 +61,14 @@ package
 			}
 		}
 		
-		public function getPoint(player:int, posx:int, posy:int)
+		public function getPoint(player:int, posx:int, posy:int):int
 		{
 			switch(player)
 			{
 				case 1: return array1[posx][posy];
 				case 2: return array2[posx][posy];
 			}
+			return 0;
 		}
 		
 		public function printArray1():void 

@@ -126,9 +126,9 @@ package
 					{
 						if (Input.mousePressed)
 						{
-							for (var i:int = 0; i < hideouts.length; i++)
+							for (var j:int = 0; j < hideouts.length; j++)
 							{
-								hideouts[i].lock = true;
+								hideouts[j].lock = true;
 							}
 							map.placeHideouts(hideouts, 1);
 							map.printArray1();

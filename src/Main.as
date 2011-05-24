@@ -8,7 +8,7 @@ package
 	 */
 	public class Main extends Engine
 	{
-		const BACKGRNDCOLOR = 0xFFFBB917;
+		private const BACKGRNDCOLOR:uint = 0xFFFBB917;
 		
 		public function Main():void 
 		{
