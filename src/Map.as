@@ -118,5 +118,30 @@ package
 			}
 		}
 		
+		public function checkTiles(player:int):Boolean
+		{
+			for (var i:int = 0; i < 10; i++)
+			{
+				for (var j:int = 0; j < 10; j++)
+				{
+					if (player == 1)
+					{
+						if (array1[i][j] == -1)
+						{
+							return false;
+						}
+					}
+					if (player == 2)
+					{
+						if (array2[i][j] == -1)
+						{
+							return false;
+						}
+					}
+				}
+			}
+			return true;
+		}
+		
 	}
 }

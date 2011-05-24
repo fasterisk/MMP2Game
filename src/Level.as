@@ -15,10 +15,17 @@ package
 		private var phase:int;
 		private var type:int;
 		
+		private var asdf:Boolean;
+		
 		[Embed(source = '../fonts/SPEENS.TTF', embedAsCFF = "false", fontFamily = 'speedball2')]
 		private const JUMP_FONT:Class;
 
 		private var hideouts:Array;
+		private var hideout2:Hideout;
+		private var hideout3:Hideout;
+		private var hideout4:Hideout;
+		private var hideout5:Hideout;
+		private var hideout6:Hideout;
 		
 		private var confirm1:Boolean;
 		private var shippart:ShipPart;
@@ -32,6 +39,7 @@ package
 		
 		public function Level():void
 		{
+			asdf = false;
 			phase = 1;
 			confirm1 = false;
 			
@@ -64,15 +72,15 @@ package
 			gameStatus2.size = 14;
 			addGraphic(gameStatus2);
 			
-			var hideout2:Hideout = new Hideout(2);
+			hideout2 = new Hideout(2);
 			hideout2.moveTo(0, 560);
-			var hideout3:Hideout = new Hideout(3);
+			hideout3 = new Hideout(3);
 			hideout3.moveTo(0, 480);
-			var hideout4:Hideout = new Hideout(4);
+			hideout4 = new Hideout(4);
 			hideout4.moveTo(320, 400);
-			var hideout5:Hideout = new Hideout(5);
+			hideout5 = new Hideout(5);
 			hideout5.moveTo(0, 400);
-			var hideout6:Hideout = new Hideout(6);
+			hideout6 = new Hideout(6);
 			hideout6.moveTo(200, 520);
 			
 			hideouts = new Array(hideout2, hideout3, hideout4, hideout5, hideout6);
@@ -121,18 +129,24 @@ package
 					}
 				}
 			}*/
-			if (phase == 1)
+			switch(phase)
 			{
-				checkPositions(); 
-			}
-			if (phase == 2)
-			{
-				setTypes();
+				case 1: checkPositions(1); break;
+				case 2: setTypes(1); break;
+				case 3: checkPositions(2); break;
+				case 4: setTypes(2); break;
+				case 6: if (asdf)
+							return;
+						asdf = true;
+						map.printArray1();
+						trace("----------------------");
+						map.printArray2();
+						break;
 			}
 			
 		}
 		
-		private function checkPositions():void
+		private function checkPositions(player:int):void
 		{
 			var allinside:Boolean = true;
 			for (var i:int = 0; i < hideouts.length; i++)
@@ -160,15 +174,15 @@ package
 							{
 								hideouts[j].lock = true;
 							}
-							map.placeHideouts(hideouts, 1);
-							map.printArray1();
+							map.placeHideouts(hideouts, player);
 							remove(confirm);
 							remove(shippart);
 							typeOverlay = new TypeOverlay();
 							add(typeOverlay);
 							actual = new MyText("Actual type:", 300, 430, 0xFF000000, 28);
 							add(actual);
-							phase = 2;
+							phase = player * 2;
+							confirm1 = false;
 						}
 					}
 				}
@@ -180,7 +194,7 @@ package
 			}
 		}
 		
-		private function setTypes():void
+		private function setTypes(player:int):void
 		{
 			if (!Input.mousePressed)
 			{
@@ -190,25 +204,59 @@ package
 			var mousex:int = FP.world.mouseX;
 			var mousey:int = FP.world.mouseY;
 			
-			if (mousex > 400 || mousey > 400)
+			if (mousex < 400 && mousey < 400)
 			{
-				return;
+				var diffx:int = mousex % 40;
+				var diffy:int = mousey % 40;
+			
+				mousex -= diffx;
+				mousey -= diffy;
+			
+				var posx:int = mousex / 40;
+				var posy:int = mousey / 40;
+			
+				if (map.getPoint(player, posx, posy) != 0)
+				{
+					map.setPoint(player, typeOverlay.getType() , posx, posy);
+					typeOverlay.setTile(mousex / 40, mousey / 40);
+				}
 			}
-			var diffx:int = mousex % 40;
-			var diffy:int = mousey % 40;
 			
-			mousex -= diffx;
-			mousey -= diffy;
-			
-			var posx:int = mousex / 40;
-			var posy:int = mousey / 40;
-			
-			if (map.getPoint(1, posx, posy) != 0)
+			if (map.checkTiles(player))
 			{
-				map.setPoint(1, typeOverlay.getType() , posx, posy);
-				typeOverlay.setTile(mousex / 40, mousey / 40);
+				if (!confirm1)
+				{
+					add(confirm);
+					confirm1 = true;
+				}
+				else {
+					mousex = FP.world.mouseX;
+					mousey = FP.world.mouseY;
+					if (mousex >= 420 && mousex <= 580 && mousey >= 300 && mousey <= 328)
+					{
+						if (Input.mousePressed)
+						{
+							remove(confirm)
+							add(shippart);
+							remove(typeOverlay);
+							for (var i:int = 0; i < hideouts.length; i++)
+							{
+								remove(hideouts[i]);
+								add(hideouts[i]);
+								hideouts[i].lock = false;
+								hideouts[i].insideField = false;
+							}
+							hideout2.moveTo(0, 560);
+							hideout3.moveTo(0, 480);
+							hideout4.moveTo(320, 400);
+							hideout5.moveTo(0, 400);
+							hideout6.moveTo(200, 520);
+							
+							phase = player * 3;
+						}
+					}
+				}
 			}
-			map.printArray1();
 		}
 	}
 	

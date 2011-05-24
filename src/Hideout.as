@@ -36,6 +36,7 @@ package
 		
 		public function Hideout(size:int):void
 		{
+			type = "Hideout";
 			lock = false;
 			insideField = false;
 			ttype = size;
@@ -171,6 +172,7 @@ package
 				}
 				endX = x;
 				endY = y;
+				
 				
 				checkInsideField();
 			}
