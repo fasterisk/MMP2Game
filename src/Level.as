@@ -75,7 +75,7 @@ package
 			var hideout6:Hideout = new Hideout(6);
 			hideout6.moveTo(200, 520);
 			
-			hideouts = new Array(hideout5, hideout6);// , hideout4, hideout5, hideout6);
+			hideouts = new Array(hideout2, hideout3, hideout4, hideout5, hideout6);
 			
 			shippart = new ShipPart(hideouts);
 			shippart.moveTo(0, 400);
