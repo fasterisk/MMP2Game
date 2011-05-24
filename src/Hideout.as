@@ -113,10 +113,32 @@ package
 			if(Input.mouseReleased && dragging)
 			{
 				dragging = false;
+				//var centrex:int = (x2 + x)/2;
+				//var centrey:int = (y2 + y)/2;
+				var diffX:int = x % 40;
+				var diffY:int = y % 40;
+				
+				x -= diffX;
+				y -= diffY;
+				if (diffX > 20)
+				{
+					x += 40;
+				}
+				
+				if (diffY > 20)
+				{
+					y += 40;
+				}
+					 
+					
+				x = x - (x % 40);
+				y = y - (y % 40);
 			}
 			
 			offsetX = mousex - x;
 			offsetY = mousey - y;
+			
+			
 		}
 	}
 }
