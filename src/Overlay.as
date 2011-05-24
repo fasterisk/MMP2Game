@@ -39,8 +39,11 @@ package
 			var mousey:int = FP.world.mouseY;
 			if (mousex < 400 && mousey < 400)
 			{
-				
 				activateTile(Math.floor(mousex / 40), Math.floor(mousey / 40));
+			}else
+			{
+				tilemap.clearTile(tilex,tiley);
+				tilemap.setTile(tilex, tiley, 0);
 			}
 		}
 		

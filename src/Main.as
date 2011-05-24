@@ -8,13 +8,14 @@ package
 	 */
 	public class Main extends Engine
 	{
-		
+		const BACKGRNDCOLOR = 0xFFFBB917;
 		
 		public function Main():void 
 		{
 			
 			super(600, 600, 60, false);
 			FP.world = new Level;
+			FP.screen.color = BACKGRNDCOLOR;
 			
 		}
 		
