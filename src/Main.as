@@ -30,7 +30,7 @@ package
 			trace("startSplash");
 			FP.world = new SplashLevel;
 			FP.screen.color = SPLASHBGCOLOR;
-			var myTimer:Timer = new Timer(5000, 1);
+			var myTimer:Timer = new Timer(10000, 1);
 			myTimer.addEventListener("timer", startGame); 
 			myTimer.start();
 			
