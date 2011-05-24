@@ -23,7 +23,26 @@ package
 			
 			add(overlay);
 			
+			var shippart:ShipPart = new ShipPart();
+			shippart.moveTo(0, 400);
+			add(shippart);
 			
+			var hideout2:Hideout = new Hideout(2);
+			hideout2.moveTo(0, 400);
+			var hideout3:Hideout = new Hideout(3);
+			hideout3.moveTo(80, 400);
+			var hideout4:Hideout = new Hideout(4);
+			hideout4.moveTo(0, 520);
+			var hideout5:Hideout = new Hideout(5);
+			hideout5.moveTo(160, 400);
+			var hideout6:Hideout = new Hideout(6);
+			hideout6.moveTo(240, 440);
+			
+			add(hideout2);
+			add(hideout3);
+			add(hideout4);
+			add(hideout5);
+			add(hideout6);
 		}
 	}
 	
