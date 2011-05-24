@@ -112,7 +112,7 @@ package
 				{
 					for (var k:int = 0; k < hideouts[i].theight / 40; k++)
 					{
-						setPoint(player, 1, hideouts[i].getX() / 40+j, hideouts[i].getY() / 40+k);
+						setPoint(player, -1, hideouts[i].getX() / 40+j, hideouts[i].getY() / 40+k);
 					}
 				}
 			}

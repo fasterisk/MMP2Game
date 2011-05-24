@@ -13,6 +13,7 @@ package
 	{
 		
 		private var phase:int;
+		private var type:int;
 		
 		[Embed(source = '../fonts/SPEENS.TTF', embedAsCFF = "false", fontFamily = 'speedball2')]
 		private const JUMP_FONT:Class;
@@ -23,9 +24,11 @@ package
 		private var shippart:ShipPart;
 		
 		private var confirm:MyText;
+		private var actual:MyText;
 		
 		private var map:Map;
 		private var overlayArray:Array;
+		private var typeOverlay:TypeOverlay;
 		
 		public function Level():void
 		{
@@ -100,6 +103,11 @@ package
 			{
 				checkPositions(); 
 			}
+			if (phase == 2)
+			{
+				setTypes();
+			}
+			
 		}
 		
 		private function checkPositions():void
@@ -133,8 +141,12 @@ package
 							map.placeHideouts(hideouts, 1);
 							map.printArray1();
 							remove(confirm);
+							remove(shippart);
+							typeOverlay = new TypeOverlay();
+							add(typeOverlay);
+							actual = new MyText("Actual type:", 300, 430, 0xFF000000, 28);
+							add(actual);
 							phase = 2;
-							setTypes();
 						}
 					}
 				}
@@ -148,8 +160,33 @@ package
 		
 		private function setTypes():void
 		{
-			remove(shippart);
+			if (!Input.mousePressed)
+			{
+				return;
+			}
 			
+			var mousex:int = FP.world.mouseX;
+			var mousey:int = FP.world.mouseY;
+			
+			if (mousex > 400 || mousey > 400)
+			{
+				return;
+			}
+			var diffx:int = mousex % 40;
+			var diffy:int = mousey % 40;
+			
+			mousex -= diffx;
+			mousey -= diffy;
+			
+			var posx:int = mousex / 40;
+			var posy:int = mousey / 40;
+			
+			if (map.getPoint(1, posx, posy) != 0)
+			{
+				map.setPoint(1, typeOverlay.getType() , posx, posy);
+				typeOverlay.setTile(mousex / 40, mousey / 40);
+			}
+			map.printArray1();
 		}
 	}
 	
