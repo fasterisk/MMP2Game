@@ -18,6 +18,9 @@ package
 		
 		private var tilemap:Tilemap;
 		
+		private var startX:int;
+		private var startY:int;
+		
 		private var twidth:int;
 		private var theight:int;
 		private var ttype:int;
@@ -248,6 +251,18 @@ package
 					graphic = tilemap;
 					break;
 			}
+			var x2:int = x + twidth;
+			var y2:int = y + theight;
+			var diffX:int = x2 - 600;
+			var diffY:int = y2 - 600;
+			if (diffX > 0)
+			{
+				x -= diffX;
+			}
+			if (diffY > 0)
+			{
+				y -= diffY;
+			}
 		}
 		
 		public function getX():int
@@ -258,6 +273,16 @@ package
 		public function getY():int
 		{
 			return y;
+		}
+		
+		public function getX2():int
+		{
+			return x + twidth;
+		}
+		
+		public function getY2():int
+		{
+			return y + theight;
 		}
 	}
 }
