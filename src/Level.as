@@ -236,6 +236,7 @@ package
 							countValidations();
 							Text.size = 25;
 							add(new MyText("You have successfully validated " + amountValidated + " Locations.", 10, 420, 0xFF000000, 25));
+							add(new MyText("Click to restart the game", 100, 460, 0xFF000000, 25));
 							trace("FINISHED"); 
 						}
 						else
