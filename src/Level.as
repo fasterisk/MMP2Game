@@ -20,8 +20,6 @@ package
 		private var type:int;
 		
 		private var player1:Boolean;
-		private var player1Attempts:int;
-		private var player2Attempts:int;
 		
 		private var validateCounter:int;
 		private var validationArray:Array;
@@ -49,9 +47,6 @@ package
 		private var actual:MyText;
 		private var player1Text:MyText;
 		private var player2Text:MyText;
-		private var attemptsText:MyText;
-		private var player1AttemptsText:MyText;
-		private var player2AttemptsText:MyText;
 		
 		private var map:Map;
 		private var overlayArray:Array;
@@ -74,8 +69,6 @@ package
 			player1 = true;
 			phase = 1;
 			confirm1 = false;
-			player1Attempts = 100;
-			player2Attempts = 100;
 			
 			validateCounter = 0;
 			p1WonImage = new Image(P1WON);
@@ -95,9 +88,6 @@ package
 			confirm = new MyText("CONFIRM", 420, 300,0xFF400000, 28);
 			player1Text = new MyText("Player 1", 420, 300, 0xFF400000, 28);
 			player2Text = new MyText("Player 2", 420, 300, 0xFF400000, 28);
-			attemptsText = new MyText("Attempts: ", 420, 330, 0xFF400000, 28);
-			player1AttemptsText = new MyText("" + player1Attempts, 550, 330, 0xFF400000, 28);
-			player2AttemptsText = new MyText("" + player2Attempts, 550, 330, 0xFF400000, 28);
 						
 			var gameTitle:Text = new Text("BattleBunker", 420, 10);
 			gameTitle.color = 0xFF400000;
@@ -338,8 +328,6 @@ package
 			}
 			typeOverlay.reset();
 			add(player1Text);
-			add(attemptsText);
-			add(player1AttemptsText);
 			phase = 5;
 		}
 		
@@ -365,20 +353,6 @@ package
 					if (point >= 10)
 						return;
 				
-					if (player == 1)
-					{
-						player1Attempts--;
-						remove(player1AttemptsText);
-						player1AttemptsText = new MyText("" + player1Attempts, 550, 330, 0xFF400000, 28);
-						add(player1AttemptsText);
-					}
-					else
-					{
-						player2Attempts--;
-						remove(player2AttemptsText);
-						player2AttemptsText = new MyText("" + player2Attempts, 550, 330, 0xFF400000, 28);
-						add(player2AttemptsText);
-					}
 					if (point != 0)
 					{
 						if (point == typeOverlay.getType())
@@ -441,17 +415,13 @@ package
 			{
 				typeOverlay.setPlayer1Tiles();
 				remove(player2Text);
-				remove(player2AttemptsText);
 				add(player1Text);
-				add(player1AttemptsText);
 			}
 			else
 			{
 				typeOverlay.setPlayer2Tiles();
 				remove(player1Text);
-				remove(player1AttemptsText);
 				add(player2Text);
-				add(player2AttemptsText);
 			}
 			
 			locked = false;
