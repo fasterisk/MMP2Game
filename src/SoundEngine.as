@@ -5,6 +5,7 @@ package
 	 * @author Loris
 	 */
 	import net.flashpunk.Sfx;
+	import net.flashpunk.FP;
 	
 	public class SoundEngine 
 	{
@@ -16,6 +17,7 @@ package
 
 		public function SoundEngine() 
 		{
+			FP.volume = 0.5;
 			
 		}
 		

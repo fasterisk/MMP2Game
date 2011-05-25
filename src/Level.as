@@ -43,8 +43,11 @@ package
 		var gameStatus3:Text;
 		var gameStatus4:Text;
 		
+		var sound:SoundEngine;
+		
 		public function Level():void
 		{
+			sound = new SoundEngine;
 			player1 = true;
 			phase = 1;
 			confirm1 = false;
@@ -155,10 +158,12 @@ package
 				case 4: setGameStatus("PlayerTwo, map the ground","where you placed your","bunkers with the actual", "groundtype."); setTypes(2); break;
 				case 5: if (player1)
 						{
+							setGameStatus("PlayerOne," , "it's your turn!", "Go find some bunkers!");
 							searchForHideouts(1);
 						}
 						else
 						{
+							setGameStatus("PlayerTwo," , "it's your turn!", "Go find some bunkers!");
 							searchForHideouts(2);
 						}
 						break;
@@ -332,7 +337,8 @@ package
 						{
 							typeOverlay.setTile(posx, posy);
 							typeOverlay.setField(player, posx, posy);
-							map.setPoint(player % 2 + 1, typeOverlay.getType()+10, posx, posy);
+							map.setPoint(player % 2 + 1, typeOverlay.getType() + 10, posx, posy);
+							sound.playExplosion();
 						}
 						else
 						{
