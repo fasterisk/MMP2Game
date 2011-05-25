@@ -40,6 +40,9 @@ package
 		[Embed(source = '../images/clear.png')]
 		private const CLEAR:Class;
 		
+		[Embed(source = '../images/manual.png')]
+		private const MANUAL:Class;
+		
 		[Embed(source = '../images/soundmuted.png')]
 		private const SOUNDMUTED:Class;
 		
@@ -74,6 +77,7 @@ package
 		var p1WonImage:Image;
 		var p2WonImage:Image;
 		private var clearImage:Image;
+		private var manualImage:Image;
 		
 		var sound:SoundEngine;
 		var gameOver:Boolean;
@@ -83,7 +87,15 @@ package
 		
 		public function Level():void
 		{
-			startNewGame();
+			p1WonImage = new Image(P1WON);
+			p2WonImage = new Image(P2WON);
+			clearImage = new Image(CLEAR);
+			manualImage = new Image(MANUAL);
+			
+			soundActivatedImage = new Image(SOUNDACTIVATED);
+			soundMutedImage = new Image(SOUNDMUTED);
+			addGraphic(manualImage);
+			phase = 0;
 		}
 		
 		private function startNewGame():void
@@ -97,12 +109,7 @@ package
 			confirm1 = false;
 			
 			validateCounter = 0;
-			p1WonImage = new Image(P1WON);
-			p2WonImage = new Image(P2WON);
-			clearImage = new Image(CLEAR);
 			
-			soundActivatedImage = new Image(SOUNDACTIVATED);
-			soundMutedImage = new Image(SOUNDMUTED);
 			addGraphic(soundMutedImage, 0, 584, 384);
 			addGraphic(soundActivatedImage, 0, 584, 384);
 			soundMutedImage.visible = false;
@@ -179,6 +186,7 @@ package
 			hideout6.rotate();
 		}
 		
+		
 		override public function update():void
 		{
 			if (Input.mousePressed && mouseX<=600 && mouseX>=584 && mouseY<=400 && mouseY>=384)
@@ -206,6 +214,12 @@ package
 			}
 			switch(phase)
 			{
+				case 0: if (Input.mousePressed)
+						{
+							addGraphic(clearImage);
+							startNewGame();
+						}
+						break;
 				case 1: setGameStatus("PlayerOne,","please place your bunkers."); checkPositions(1); break;
 				case 2: setGameStatus("PlayerOne, map the ground","where you placed your","bunkers with the actual","groundtype."); setTypes(1); break;
 				case 3: setGameStatus("PlayerTwo,","please place your bunkers."); checkPositions(2); break;
@@ -243,8 +257,8 @@ package
 						{
 							if (Input.mousePressed)
 							{
-								addGraphic(clearImage);
-								startNewGame();
+								addGraphic(manualImage);
+								phase = 0;
 							}
 						}
 						break;
