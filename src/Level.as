@@ -1,5 +1,6 @@
 package 
 {
+	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.World;
 	import net.flashpunk.utils.Input;
@@ -19,6 +20,12 @@ package
 		
 		[Embed(source = '../fonts/SPEENS.TTF', embedAsCFF = "false", fontFamily = 'speedball2')]
 		private const JUMP_FONT:Class;
+		
+		[Embed(source = '../images/p1won.png')]
+		private const P1WON:Class;
+		
+		[Embed(source = '../images/p2won.png')]
+		private const P2WON:Class;
 
 		private var hideouts:Array;
 		private var hideout2:Hideout;
@@ -42,6 +49,8 @@ package
 		var gameStatus2:Text;
 		var gameStatus3:Text;
 		var gameStatus4:Text;
+		var p1WonImage:Image;
+		var p2WonImage:Image;
 		
 		var sound:SoundEngine;
 		
@@ -51,6 +60,9 @@ package
 			player1 = true;
 			phase = 1;
 			confirm1 = false;
+			
+			p1WonImage = new Image(P1WON);
+			p2WonImage = new Image(P2WON);
 			
 			var random:int = Math.round(Math.random() * 5 + 1);
 			trace(random);
@@ -147,7 +159,15 @@ package
 						}
 						break;
 				case 6: startGame(); break;
-				case 7: trace("FINISHED"); break;//add splash screen
+				case 7: if (player1)
+						{
+							addGraphic(p1WonImage);
+						}else
+						{
+							addGraphic(p2WonImage);
+						}
+						
+						trace("FINISHED"); break;//add splash screen
 			}
 			
 		}
