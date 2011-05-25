@@ -77,6 +77,9 @@ package
 		var soundMutedImage:Image;
 		var soundActivatedImage:Image;
 		
+		var missed:MyText = new MyText("You missed!", 155, 190, 0xFFFFFFFF, 25);
+		var badhit:MyText = new MyText("Bunker found, but wrong type!", 30, 190, 0xFFFFFFFF, 25);
+		
 		public function Level():void
 		{
 			locked = false;
@@ -168,6 +171,7 @@ package
 			hideout5.rotate();
 			hideout6.rotate();
 			
+			//sound.playStart();
 		}
 		
 		override public function update():void
@@ -228,8 +232,9 @@ package
 							addValidation();
 							countValidations();
 							Text.size = 25;
-							add(new MyText("You have successfully validated " + amountValidated + " Locations.", 10, 420, 0xFF000000, 25));
+							add(new MyText("You have successfully validated " + amountValidated + " Locations.", 25, 420, 0xFF000000, 25));
 							trace("FINISHED"); 
+							//sound.playVictory();
 						}
 						break;
 						
@@ -452,6 +457,8 @@ package
 							var timer:Timer = new Timer(2000, 1);
 							timer.addEventListener("timer", changePlayer);
 							timer.start();
+							sound.playBadHit();
+							add(badhit);
 						}					
 					}
 					else
@@ -462,6 +469,8 @@ package
 						var timer2:Timer = new Timer(2000, 1);
 						timer2.addEventListener("timer", changePlayer);
 						timer2.start();
+						sound.playMiss();
+						add(missed);
 						
 					}
 				}
@@ -492,6 +501,8 @@ package
 		{
 			typeOverlay.reset();
 			player1 = !player1;
+			remove(badhit);
+			remove(missed);
 			if (player1)
 			{
 				typeOverlay.setPlayer1Tiles();
