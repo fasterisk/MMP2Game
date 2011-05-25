@@ -147,6 +147,7 @@ package
 						}
 						break;
 				case 6: startGame(); break;
+				case 7: trace("FINISHED"); break;//add splash screen
 			}
 			
 		}
@@ -358,11 +359,26 @@ package
 						}
 					}
 				}
-				typeOverlay.printPlayer1Field();
-				trace("-------------------");
-				typeOverlay.printPlayer2Field();
-				trace("-------------------");
 			}
+			
+			checkIfFinished(player);
+		}
+		
+		public function checkIfFinished(player:int):void
+		{
+			for (var i:int = 0; i < 10; i++)
+			{
+				for (var j:int = 0; j < 10; j++)
+				{
+					var point:int = map.getPoint(player % 2 + 1, i, j);
+					if (point != 0 && point < 10)
+					{
+						return;
+					}
+				}
+			}
+			
+			phase = 7;
 		}
 	}
 	
