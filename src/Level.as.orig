@@ -1,8 +1,11 @@
 package 
 {
-        import net.flashpunk.graphics.Image;
+<<<<<<< HEAD
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
+=======
+	import net.flashpunk.graphics.Image;
+>>>>>>> splash
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.World;
 	import net.flashpunk.utils.Input;
@@ -67,8 +70,11 @@ package
 		
 		public function Level():void
 		{
+<<<<<<< HEAD
 			locked = false;
+=======
 			gameOver = false;
+>>>>>>> splash
 			sound = new SoundEngine;
 			player1 = true;
 			phase = 1;
@@ -76,10 +82,13 @@ package
 			player1Attempts = 100;
 			player2Attempts = 100;
 			
+<<<<<<< HEAD
 			validateCounter = 0;
+=======
 			p1WonImage = new Image(P1WON);
 			p2WonImage = new Image(P2WON);
 			
+>>>>>>> splash
 			var random:int = Math.round(Math.random() * 5 + 1);
 			trace(random);
 			map = new Map(random);
@@ -180,6 +189,9 @@ package
 						}
 						break;
 				case 6: startGame(); break;
+<<<<<<< HEAD
+				case 7: break;//add splash screen
+=======
 				case 7: if (!gameOver)
 						{
 							if (player1)
@@ -193,6 +205,7 @@ package
 							trace("FINISHED"); 
 						}break;//add splash screen
 						
+>>>>>>> splash
 			}
 			
 		}
@@ -427,7 +440,6 @@ package
 		
 		public function changePlayer(event:TimerEvent):void
 		{
-			typeOverlay.reset();
 			player1 = !player1;
 			if (player1)
 			{
@@ -445,7 +457,7 @@ package
 				add(player2Text);
 				add(player2AttemptsText);
 			}
-			
+			typeOverlay.reset();
 			locked = false;
 		}
 	}
