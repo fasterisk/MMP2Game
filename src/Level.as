@@ -36,6 +36,10 @@ package
 		private var map:Map;
 		private var overlayArray:Array;
 		private var typeOverlay:TypeOverlay;
+		var gameStatus1:Text;
+		var gameStatus2:Text;
+		var gameStatus3:Text;
+		var gameStatus4:Text;
 		
 		public function Level():void
 		{
@@ -62,15 +66,26 @@ package
 			gameTitle.color = 0xFF400000;
 			addGraphic(gameTitle);
 			
-			var gameStatus1:Text = new Text("gameStatus1", 410, 60);
+			gameStatus1= new Text("gameStatus1 ____________", 410, 60);
 			gameStatus1.color = 0xFF000000;
 			gameStatus1.size = 14;
 			addGraphic(gameStatus1);
 			
-			var gameStatus2:Text = new Text("gameStatus2", 410, 80);
+			gameStatus2 = new Text("gameStatus2 ____________", 410, 80);
 			gameStatus2.color = 0xFF000000;
 			gameStatus2.size = 14;
 			addGraphic(gameStatus2);
+			
+			gameStatus3 = new Text("gameStatus3 ____________", 410, 100);
+			gameStatus3.color = 0xFF000000;
+			gameStatus3.size = 14;
+			addGraphic(gameStatus3);
+			
+			gameStatus4 = new Text("gameStatus4 ____________", 410, 120);
+			gameStatus4.color = 0xFF000000;
+			gameStatus4.size = 14;
+			addGraphic(gameStatus4);
+			
 			
 			hideout2 = new Hideout(2);
 			hideout2.moveTo(0, 560);
@@ -131,12 +146,13 @@ package
 			}*/
 			switch(phase)
 			{
-				case 1: checkPositions(1); break;
-				case 2: setTypes(1); break;
-				case 3: checkPositions(2); break;
-				case 4: setTypes(2); break;
+				case 1: setGameStatus("PlayerOne,","please place your bunkers."); checkPositions(1); break;
+				case 2: setGameStatus("PlayerOne, map the ground","where you placed your","bunkers with the actual","groundtype."); setTypes(1); break;
+				case 3: setGameStatus("PlayerTwo,","please place your bunkers."); checkPositions(2); break;
+				case 4: setGameStatus("PlayerTwo, map the ground","where you placed your","bunkers with the actual", "groundtype."); setTypes(2); break;
 				case 6: if (asdf)
 							return;
+						setGameStatus("Let the battle begin!!!");
 						asdf = true;
 						map.printArray1();
 						trace("----------------------");
@@ -179,7 +195,7 @@ package
 							remove(shippart);
 							typeOverlay = new TypeOverlay();
 							add(typeOverlay);
-							actual = new MyText("Actual type:", 300, 430, 0xFF000000, 28);
+							actual = new MyText("Current type:", 300, 430, 0xFF000000, 28);
 							add(actual);
 							phase = player * 2;
 							confirm1 = false;
@@ -192,6 +208,14 @@ package
 				remove(confirm);
 				confirm1 = false;
 			}
+		}
+		
+		public function setGameStatus(part1:String, part2:String="", part3:String ="",part4:String =""):void
+		{
+			gameStatus1.text = part1;
+			gameStatus2.text = part2;
+			gameStatus3.text = part3;
+			gameStatus4.text = part4;
 		}
 		
 		private function setTypes(player:int):void
