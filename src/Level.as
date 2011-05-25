@@ -15,7 +15,7 @@ package
 		private var phase:int;
 		private var type:int;
 		
-		private var asdf:Boolean;
+		private var player1:Boolean;
 		
 		[Embed(source = '../fonts/SPEENS.TTF', embedAsCFF = "false", fontFamily = 'speedball2')]
 		private const JUMP_FONT:Class;
@@ -32,6 +32,8 @@ package
 		
 		private var confirm:MyText;
 		private var actual:MyText;
+		private var player1Text:MyText;
+		private var player2Text:MyText;
 		
 		private var map:Map;
 		private var overlayArray:Array;
@@ -39,7 +41,7 @@ package
 		
 		public function Level():void
 		{
-			asdf = false;
+			player1 = true;
 			phase = 1;
 			confirm1 = false;
 			
@@ -55,7 +57,8 @@ package
 			Text.size = 28;
 			
 			confirm = new MyText("CONFIRM", 420, 300,0xFF400000, 28);
-			
+			player1Text = new MyText("Player 1", 420, 300, 0xFF400000, 28);
+			player2Text = new MyText("Player 2", 420, 300, 0xFF400000, 28);
 			
 			
 			var gameTitle:Text = new Text("BattleBunker", 420, 10);
@@ -135,13 +138,16 @@ package
 				case 2: setTypes(1); break;
 				case 3: checkPositions(2); break;
 				case 4: setTypes(2); break;
-				case 6: if (asdf)
-							return;
-						asdf = true;
-						map.printArray1();
-						trace("----------------------");
-						map.printArray2();
+				case 5: if (player1)
+						{
+							searchForHideouts(1);
+						}
+						else
+						{
+							searchForHideouts(2);
+						}
 						break;
+				case 6: startGame(); break;
 			}
 			
 		}
@@ -237,8 +243,12 @@ package
 						if (Input.mousePressed)
 						{
 							remove(confirm)
-							add(shippart);
-							remove(typeOverlay);
+							
+							if (phase == 2)
+							{
+								remove(typeOverlay);
+								add(shippart);
+							}
 							for (var i:int = 0; i < hideouts.length; i++)
 							{
 								remove(hideouts[i]);
@@ -250,9 +260,74 @@ package
 							hideout3.moveTo(0, 480);
 							hideout4.moveTo(320, 400);
 							hideout5.moveTo(0, 400);
-							hideout6.moveTo(200, 520);
+							hideout6.moveTo(200, 480);
 							
 							phase = player * 3;
+						}
+					}
+				}
+			}
+		}
+		
+		private function startGame():void
+		{
+			for (var i:int = 0; i < hideouts.length; i++)
+			{
+				remove(hideouts[i]);
+			}
+			typeOverlay.reset();
+			add(player1Text);
+			phase = 5;
+		}
+		
+		private function searchForHideouts(player:int):void
+		{
+			if (Input.mousePressed)
+			{
+				var mousex:int = FP.world.mouseX;
+				var mousey:int = FP.world.mouseY;
+				if (mousex < 400 && mousey < 400)
+				{
+					var diffx:int = mousex % 40;
+					var diffy:int = mousey % 40;
+			
+					mousex -= diffx;
+					mousey -= diffy;
+			
+					var posx:int = mousex / 40;
+					var posy:int = mousey / 40;
+					
+					var point:int = map.getPoint(player % 2 +1, posx, posy);
+					
+					if (point != 0 && point == typeOverlay.getType())
+					{
+						typeOverlay.setTile(posx, posy);
+						typeOverlay.setField(player, posx, posy);
+						map.setPoint(player % 2 + 1, 10, posx, posy);
+						player1 = !player1;
+						if (player1)
+						{
+							remove(player2Text);
+							add(player1Text);
+						}
+						else
+						{
+							remove(player1Text);
+							add(player2Text);
+						}
+					}
+					else
+					{
+						player1 = !player1;
+						if (player1)
+						{
+							remove(player2Text);
+							add(player1Text);
+						}
+						else
+						{
+							remove(player1Text);
+							add(player2Text);
 						}
 					}
 				}

@@ -19,6 +19,9 @@ package
 		
 		private var ttype:int;
 		
+		private var player1Field:Array;
+		private var player2Field:Array;
+		
 		public function TypeOverlay():void
 		{
 			ttype = 1;
@@ -39,12 +42,25 @@ package
 			tilemap.setTile(9, 12, 1);
 			
 			graphic = tilemap;
+			player1Field = new Array();
+			player2Field = new Array();
+			
+			for (var i:int = 0; i < 10; i++)
+			{
+				player1Field[i] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+				player2Field[i] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+			}
 		}
 		
 		public function setTile(posx:int, posy:int):void
 		{
 			tilemap.clearTile(posx, posy);
 			tilemap.setTile(posx, posy, ttype);
+		}
+		
+		public function setField(player:int, posx:int, posy:int):void
+		{
+			
 		}
 		
 		
@@ -84,6 +100,18 @@ package
 		public function getType():int
 		{
 			return ttype;
+		}
+		
+		public function reset():void
+		{
+			for (var i:int = 0; i < 10; i++)
+			{
+				for (var j:int = 0; j < 10; j++)
+				{
+					tilemap.clearTile(i, j);
+					tilemap.setTile(i, j, 0);
+				}
+			}
 		}
 	}
 	
