@@ -126,27 +126,6 @@ package
 		{
 			super.update();
 			
-			/*for (var i:int = 0; i < hideouts.length; i++)
-			{
-				for (var j:int = 0; j < hideouts.length; j++)
-				{
-					if (i != j && j > i)
-					{
-						var h1:Hideout = hideouts[i];
-						var h2:Hideout = hideouts[j];
-						
-						if (h1.getEndX2() < h2.getX() || h1.getEndX() > h2.getX2()
-						 || h1.getEndY2() < h2.getY() || h1.getEndY() > h2.getY2())
-						{
-							
-						}
-						else
-						{
-							h1.reset();
-						}
-					}
-				}
-			}*/
 			switch(phase)
 			{
 				case 1: setGameStatus("PlayerOne,","please place your bunkers."); checkPositions(1); break;
