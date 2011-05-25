@@ -37,6 +37,9 @@ package
 		[Embed(source = '../images/p2won.png')]
 		private const P2WON:Class;
 		
+		[Embed(source = '../images/clear.png')]
+		private const CLEAR:Class;
+		
 		[Embed(source = '../images/soundmuted.png')]
 		private const SOUNDMUTED:Class;
 		
@@ -70,6 +73,7 @@ package
 		var gameStatus4:Text;
 		var p1WonImage:Image;
 		var p2WonImage:Image;
+		private var clearImage:Image;
 		
 		var sound:SoundEngine;
 		var gameOver:Boolean;
@@ -78,6 +82,11 @@ package
 		var soundActivatedImage:Image;
 		
 		public function Level():void
+		{
+			startNewGame();
+		}
+		
+		private function startNewGame():void
 		{
 			locked = false;
 			gameOver = false;
@@ -90,6 +99,7 @@ package
 			validateCounter = 0;
 			p1WonImage = new Image(P1WON);
 			p2WonImage = new Image(P2WON);
+			clearImage = new Image(CLEAR);
 			
 			soundActivatedImage = new Image(SOUNDACTIVATED);
 			soundMutedImage = new Image(SOUNDMUTED);
@@ -167,7 +177,6 @@ package
 			hideout4.rotate();
 			hideout5.rotate();
 			hideout6.rotate();
-			
 		}
 		
 		override public function update():void
@@ -176,8 +185,6 @@ package
 			{
 				if (soundMuted)
 				{
-					
-					
 					soundMuted = false;
 					sound.activateSound();
 					soundMutedImage.visible = false;
@@ -230,6 +237,14 @@ package
 							Text.size = 25;
 							add(new MyText("You have successfully validated " + amountValidated + " Locations.", 10, 420, 0xFF000000, 25));
 							trace("FINISHED"); 
+						}
+						else
+						{
+							if (Input.mousePressed)
+							{
+								addGraphic(clearImage);
+								startNewGame();
+							}
 						}
 						break;
 						
