@@ -514,17 +514,16 @@ package
 		
 		public function addValidation():void
 		{
-			if (validateCounter < 0)
-			{
-				trace("nix mit validiern");
-				return;
-			}
-			
 			validationArray = new Array();
 			
 			for (var i:int = 0; i < 10; i++)
 			{
 				validationArray[i] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+			}
+			
+			if (validateCounter < 0)
+			{
+				return;
 			}
 			
 			for (var j:int = 0; j < 10; j++)
