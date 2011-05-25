@@ -308,12 +308,17 @@ package
 								add(hideouts[i]);
 								hideouts[i].lock = false;
 								hideouts[i].insideField = false;
+								if (!hideouts[i].getRotation())
+								{
+									hideouts[i].rotate();
+								}
 							}
 							hideout2.moveTo(0, 560);
 							hideout3.moveTo(0, 480);
 							hideout4.moveTo(320, 400);
 							hideout5.moveTo(0, 400);
 							hideout6.moveTo(200, 480);
+							
 							
 							phase = player * 3;
 						}
