@@ -15,6 +15,7 @@ package
 	public class Level extends World 
 	{
 		private var locked:Boolean;
+		private var soundMuted:Boolean;
 		
 		private var phase:int;
 		private var type:int;
@@ -33,6 +34,12 @@ package
 		
 		[Embed(source = '../images/p2won.png')]
 		private const P2WON:Class;
+		
+		[Embed(source = '../images/soundmuted.png')]
+		private const SOUNDMUTED:Class;
+		
+		[Embed(source = '../images/soundactivated.png')]
+		private const SOUNDACTIVATED:Class;
 
 		private var hideouts:Array;
 		private var hideout2:Hideout;
@@ -65,10 +72,14 @@ package
 		var sound:SoundEngine;
 		var gameOver:Boolean;
 		
+		var soundMutedImage:Image;
+		var soundActivatedImage:Image;
+		
 		public function Level():void
 		{
 			locked = false;
 			gameOver = false;
+			soundMuted = false;
 			sound = new SoundEngine;
 			player1 = true;
 			phase = 1;
@@ -79,6 +90,12 @@ package
 			validateCounter = 0;
 			p1WonImage = new Image(P1WON);
 			p2WonImage = new Image(P2WON);
+			
+			soundActivatedImage = new Image(SOUNDACTIVATED);
+			soundMutedImage = new Image(SOUNDMUTED);
+			addGraphic(soundMutedImage, 0, 584, 384);
+			addGraphic(soundActivatedImage, 0, 584, 384);
+			soundMutedImage.visible = false;
 			
 			var random:int = Math.round(Math.random() * 5 + 1);
 			trace(random);
@@ -157,6 +174,26 @@ package
 		
 		override public function update():void
 		{
+			if (Input.mousePressed && mouseX<=600 && mouseX>=584 && mouseY<=400 && mouseY>=384)
+			{
+				if (soundMuted)
+				{
+					
+					
+					soundMuted = false;
+					sound.activateSound();
+					soundMutedImage.visible = false;
+					soundActivatedImage.visible = true;
+				}else
+				{
+					soundMuted = true;
+					sound.muteSound();
+					soundMutedImage.visible = true;
+					soundActivatedImage.visible = false;
+				}
+			}
+			
+			
 			super.update();
 			if (locked)
 			{
