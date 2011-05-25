@@ -1,5 +1,7 @@
 package 
 {
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.World;
 	import net.flashpunk.utils.Input;
@@ -11,6 +13,7 @@ package
 	 */
 	public class Level extends World 
 	{
+		private var locked:Boolean;
 		
 		private var phase:int;
 		private var type:int;
@@ -54,6 +57,7 @@ package
 		
 		public function Level():void
 		{
+			locked = false;
 			sound = new SoundEngine;
 			player1 = true;
 			phase = 1;
@@ -140,7 +144,10 @@ package
 		override public function update():void
 		{
 			super.update();
-			
+			if (locked)
+			{
+				return;
+			}
 			switch(phase)
 			{
 				case 1: setGameStatus("PlayerOne,","please place your bunkers."); checkPositions(1); break;
@@ -352,48 +359,21 @@ package
 						{
 							validateCounter -= 2;
 							typeOverlay.setWrong(player, posx, posy);
-							typeOverlay.reset();
-							player1 = !player1;
-							if (player1)
-							{
-								typeOverlay.setPlayer1Tiles();
-								remove(player2Text);
-								remove(player2AttemptsText);
-								add(player1Text);
-								add(player1AttemptsText);
-							}
-							else
-							{
-								typeOverlay.setPlayer2Tiles();
-								remove(player1Text);
-								remove(player1AttemptsText);
-								add(player2Text);
-								add(player2AttemptsText);
-							}
+							locked = true;
+							var timer:Timer = new Timer(2000, 1);
+							timer.addEventListener("timer", changePlayer);
+							timer.start();
 						}					
 					}
 					else
 					{
 						map.setPoint(player % 2 +1, 10, posx, posy);
 						typeOverlay.setWrongPlace(player, posx, posy);
-						typeOverlay.reset();
-						player1 = !player1;
-						if (player1)
-						{
-							typeOverlay.setPlayer1Tiles();
-							remove(player2Text);
-							remove(player2AttemptsText);
-							add(player1Text);
-							add(player1AttemptsText);
-						}
-						else
-						{
-							typeOverlay.setPlayer2Tiles();
-							remove(player1Text);
-							remove(player1AttemptsText);
-							add(player2Text);
-							add(player2AttemptsText);
-						}
+						locked = true;
+						var timer:Timer = new Timer(2000, 1);
+						timer.addEventListener("timer", changePlayer);
+						timer.start();
+						
 					}
 				}
 			}
@@ -417,6 +397,29 @@ package
 			
 			
 			phase = 7;
+		}
+		
+		public function changePlayer(event:TimerEvent):void
+		{
+			player1 = !player1;
+			if (player1)
+			{
+				typeOverlay.setPlayer1Tiles();
+				remove(player2Text);
+				remove(player2AttemptsText);
+				add(player1Text);
+				add(player1AttemptsText);
+			}
+			else
+			{
+				typeOverlay.setPlayer2Tiles();
+				remove(player1Text);
+				remove(player1AttemptsText);
+				add(player2Text);
+				add(player2AttemptsText);
+			}
+			typeOverlay.reset();
+			locked = false;
 		}
 	}
 	
