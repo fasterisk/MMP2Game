@@ -25,6 +25,7 @@ package
 		private var player2Attempts:int;
 		
 		private var validateCounter:int;
+		private var validationArray:Array;
 		
 		[Embed(source = '../fonts/SPEENS.TTF', embedAsCFF = "false", fontFamily = 'speedball2')]
 		private const JUMP_FONT:Class;
@@ -227,8 +228,10 @@ package
 								addGraphic(p2WonImage);
 							}
 							gameOver = true;
+							addValidation();
 							trace("FINISHED"); 
-						}break;//add splash screen
+						}
+						break;
 						
 			}
 			
@@ -345,12 +348,17 @@ package
 								add(hideouts[i]);
 								hideouts[i].lock = false;
 								hideouts[i].insideField = false;
+								if (!hideouts[i].getRotation())
+								{
+									hideouts[i].rotate();
+								}
 							}
 							hideout2.moveTo(0, 560);
 							hideout3.moveTo(0, 480);
 							hideout4.moveTo(320, 400);
 							hideout5.moveTo(0, 400);
 							hideout6.moveTo(200, 480);
+							
 							
 							phase = player * 3;
 						}
@@ -484,6 +492,40 @@ package
 			}
 			
 			locked = false;
+		}
+		
+		public function addValidation():void
+		{
+			if (validateCounter < 0)
+			{
+				trace("nix mit validiern");
+				return;
+			}
+			
+			validationArray = new Array();
+			
+			for (var i:int = 0; i < 10; i++)
+			{
+				validationArray[i] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+			}
+			
+			for (var j:int = 0; j < 10; j++)
+			{
+				for (var k:int = 0; k < 10; k++)
+				{
+					var value1:int = map.getPoint(1, j, k);
+					var value2:int = map.getPoint(2, j, k);
+					
+					if (value1 > 10)
+					{
+						validationArray[j][k] = value1;
+					}
+					else if (value2 > 10)
+					{
+						validationArray[j][k] = value2;
+					}
+				}
+			}
 		}
 	}
 	

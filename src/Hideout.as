@@ -11,7 +11,8 @@ package
 	 */
 	public class Hideout extends Entity 
 	{
-		
+	
+		private var rotated:Boolean;
 		public var lock:Boolean;
 		private var dragging:Boolean;
 		public var insideField:Boolean;
@@ -163,6 +164,18 @@ package
 				{
 					y -= diffY;
 				}
+				if (y < 400 && x >=400)
+				{
+					x = 400 - twidth;
+				}
+				if (x < 0)
+				{
+					x = 0;
+				}
+				if (y < 0)
+				{
+					y = 0;
+				}
 					
 				checkInsideField();
 			}
@@ -173,6 +186,7 @@ package
 		
 		public function rotate():void
 		{
+			rotated = !rotated;
 			var temp:int = twidth;
 			twidth = theight;
 			theight = temp;
@@ -292,6 +306,11 @@ package
 		public function getY2():int
 		{
 			return y + theight;
+		}
+		
+		public function getRotation():Boolean
+		{
+			return rotated;
 		}
 		
 		private function checkInsideField():void
