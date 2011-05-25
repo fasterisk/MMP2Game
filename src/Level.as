@@ -53,9 +53,11 @@ package
 		var p2WonImage:Image;
 		
 		var sound:SoundEngine;
+		var gameOver:Boolean;
 		
 		public function Level():void
 		{
+			gameOver = false;
 			sound = new SoundEngine;
 			player1 = true;
 			phase = 1;
@@ -159,15 +161,19 @@ package
 						}
 						break;
 				case 6: startGame(); break;
-				case 7: if (player1)
+				case 7: if (!gameOver)
 						{
-							addGraphic(p1WonImage);
-						}else
-						{
-							addGraphic(p2WonImage);
-						}
+							if (player1)
+							{
+								addGraphic(p1WonImage);
+							}else
+							{
+								addGraphic(p2WonImage);
+							}
+							gameOver = true;
+							trace("FINISHED"); 
+						}break;//add splash screen
 						
-						trace("FINISHED"); break;//add splash screen
 			}
 			
 		}
