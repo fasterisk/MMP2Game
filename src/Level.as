@@ -16,6 +16,10 @@ package
 		private var type:int;
 		
 		private var player1:Boolean;
+		private var player1Attempts:int;
+		private var player2Attempts:int;
+		
+		private var validateCounter:int;
 		
 		[Embed(source = '../fonts/SPEENS.TTF', embedAsCFF = "false", fontFamily = 'speedball2')]
 		private const JUMP_FONT:Class;
@@ -34,6 +38,9 @@ package
 		private var actual:MyText;
 		private var player1Text:MyText;
 		private var player2Text:MyText;
+		private var attemptsText:MyText;
+		private var player1AttemptsText:MyText;
+		private var player2AttemptsText:MyText;
 		
 		private var map:Map;
 		private var overlayArray:Array;
@@ -51,7 +58,10 @@ package
 			player1 = true;
 			phase = 1;
 			confirm1 = false;
+			player1Attempts = 100;
+			player2Attempts = 100;
 			
+			validateCounter = 0;
 			var random:int = Math.round(Math.random() * 5 + 1);
 			trace(random);
 			map = new Map(random);
@@ -66,8 +76,10 @@ package
 			confirm = new MyText("CONFIRM", 420, 300,0xFF400000, 28);
 			player1Text = new MyText("Player 1", 420, 300, 0xFF400000, 28);
 			player2Text = new MyText("Player 2", 420, 300, 0xFF400000, 28);
-			
-			
+			attemptsText = new MyText("Attempts: ", 420, 330, 0xFF400000, 28);
+			player1AttemptsText = new MyText("" + player1Attempts, 550, 330, 0xFF400000, 28);
+			player2AttemptsText = new MyText("" + player2Attempts, 550, 330, 0xFF400000, 28);
+						
 			var gameTitle:Text = new Text("BattleBunker", 420, 10);
 			gameTitle.color = 0xFF400000;
 			addGraphic(gameTitle);
@@ -147,7 +159,7 @@ package
 						}
 						break;
 				case 6: startGame(); break;
-				case 7: trace("FINISHED"); break;//add splash screen
+				case 7: break;//add splash screen
 			}
 			
 		}
@@ -285,6 +297,8 @@ package
 			}
 			typeOverlay.reset();
 			add(player1Text);
+			add(attemptsText);
+			add(player1AttemptsText);
 			phase = 5;
 		}
 		
@@ -310,11 +324,25 @@ package
 					if (point >= 10)
 						return;
 				
-					
+					if (player == 1)
+					{
+						player1Attempts--;
+						remove(player1AttemptsText);
+						player1AttemptsText = new MyText("" + player1Attempts, 550, 330, 0xFF400000, 28);
+						add(player1AttemptsText);
+					}
+					else
+					{
+						player2Attempts--;
+						remove(player2AttemptsText);
+						player2AttemptsText = new MyText("" + player2Attempts, 550, 330, 0xFF400000, 28);
+						add(player2AttemptsText);
+					}
 					if (point != 0)
 					{
 						if (point == typeOverlay.getType())
 						{
+							validateCounter++;
 							typeOverlay.setTile(posx, posy);
 							typeOverlay.setField(player, posx, posy);
 							map.setPoint(player % 2 + 1, typeOverlay.getType() + 10, posx, posy);
@@ -322,6 +350,7 @@ package
 						}
 						else
 						{
+							validateCounter -= 2;
 							typeOverlay.setWrong(player, posx, posy);
 							typeOverlay.reset();
 							player1 = !player1;
@@ -329,13 +358,17 @@ package
 							{
 								typeOverlay.setPlayer1Tiles();
 								remove(player2Text);
+								remove(player2AttemptsText);
 								add(player1Text);
+								add(player1AttemptsText);
 							}
 							else
 							{
 								typeOverlay.setPlayer2Tiles();
 								remove(player1Text);
+								remove(player1AttemptsText);
 								add(player2Text);
+								add(player2AttemptsText);
 							}
 						}					
 					}
@@ -349,13 +382,17 @@ package
 						{
 							typeOverlay.setPlayer1Tiles();
 							remove(player2Text);
+							remove(player2AttemptsText);
 							add(player1Text);
+							add(player1AttemptsText);
 						}
 						else
 						{
 							typeOverlay.setPlayer2Tiles();
 							remove(player1Text);
+							remove(player1AttemptsText);
 							add(player2Text);
+							add(player2AttemptsText);
 						}
 					}
 				}
@@ -377,6 +414,7 @@ package
 					}
 				}
 			}
+			
 			
 			phase = 7;
 		}
