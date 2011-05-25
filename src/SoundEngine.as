@@ -16,14 +16,21 @@ package
 		public var explosion:Sfx = new Sfx(EXPLOSION);
 
 		public function SoundEngine() 
-		{
-			FP.volume = 0.5;
-			
-		}
+		{}
 		
-		public function playExplosion()
+		public function playExplosion():void
 		{
 			explosion.play();
+		}
+		
+		public function muteSound():void
+		{
+			FP.volume = 0;
+		}
+		
+		public function activateSound():void
+		{
+			FP.volume = 1;
 		}
 		
 	}
