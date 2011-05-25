@@ -26,6 +26,7 @@ package
 		
 		private var validateCounter:int;
 		private var validationArray:Array;
+		private var amountValidated:int;
 		
 		[Embed(source = '../fonts/SPEENS.TTF', embedAsCFF = "false", fontFamily = 'speedball2')]
 		private const JUMP_FONT:Class;
@@ -229,6 +230,9 @@ package
 							}
 							gameOver = true;
 							addValidation();
+							countValidations();
+							Text.size = 25;
+							add(new MyText("You have successfully validated " + amountValidated + " Locations.", 10, 420, 0xFF000000, 25));
 							trace("FINISHED"); 
 						}
 						break;
@@ -523,6 +527,21 @@ package
 					else if (value2 > 10)
 					{
 						validationArray[j][k] = value2;
+					}
+				}
+			}
+		}
+		
+		private function countValidations():void 
+		{
+			amountValidated = 0;
+			for (var i:int = 0; i < 10; i++)
+			{
+				for (var j:int = 0; j < 10; j++)
+				{
+					if (validationArray[i][j] > 10)
+					{
+						amountValidated++;
 					}
 				}
 			}
