@@ -1,5 +1,6 @@
 package 
 {
+        import net.flashpunk.graphics.Image;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	import net.flashpunk.graphics.Text;
@@ -26,6 +27,12 @@ package
 		
 		[Embed(source = '../fonts/SPEENS.TTF', embedAsCFF = "false", fontFamily = 'speedball2')]
 		private const JUMP_FONT:Class;
+		
+		[Embed(source = '../images/p1won.png')]
+		private const P1WON:Class;
+		
+		[Embed(source = '../images/p2won.png')]
+		private const P2WON:Class;
 
 		private var hideouts:Array;
 		private var hideout2:Hideout;
@@ -52,12 +59,16 @@ package
 		var gameStatus2:Text;
 		var gameStatus3:Text;
 		var gameStatus4:Text;
+		var p1WonImage:Image;
+		var p2WonImage:Image;
 		
 		var sound:SoundEngine;
+		var gameOver:Boolean;
 		
 		public function Level():void
 		{
 			locked = false;
+			gameOver = false;
 			sound = new SoundEngine;
 			player1 = true;
 			phase = 1;
@@ -66,6 +77,9 @@ package
 			player2Attempts = 100;
 			
 			validateCounter = 0;
+			p1WonImage = new Image(P1WON);
+			p2WonImage = new Image(P2WON);
+			
 			var random:int = Math.round(Math.random() * 5 + 1);
 			trace(random);
 			map = new Map(random);
@@ -166,7 +180,19 @@ package
 						}
 						break;
 				case 6: startGame(); break;
-				case 7: break;//add splash screen
+				case 7: if (!gameOver)
+						{
+							if (player1)
+							{
+								addGraphic(p1WonImage);
+							}else
+							{
+								addGraphic(p2WonImage);
+							}
+							gameOver = true;
+							trace("FINISHED"); 
+						}break;//add splash screen
+						
 			}
 			
 		}
