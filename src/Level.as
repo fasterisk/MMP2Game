@@ -299,38 +299,61 @@ package
 					
 					var point:int = map.getPoint(player % 2 +1, posx, posy);
 					
-					if (point != 0 && point == typeOverlay.getType())
+					if (point >= 10)
+						return;
+				
+					
+					if (point != 0)
 					{
-						typeOverlay.setTile(posx, posy);
-						typeOverlay.setField(player, posx, posy);
-						map.setPoint(player % 2 + 1, 10, posx, posy);
-						player1 = !player1;
-						if (player1)
+						if (point == typeOverlay.getType())
 						{
-							remove(player2Text);
-							add(player1Text);
+							typeOverlay.setTile(posx, posy);
+							typeOverlay.setField(player, posx, posy);
+							map.setPoint(player % 2 + 1, typeOverlay.getType()+10, posx, posy);
 						}
 						else
 						{
-							remove(player1Text);
-							add(player2Text);
-						}
+							typeOverlay.setWrong(player, posx, posy);
+							typeOverlay.reset();
+							player1 = !player1;
+							if (player1)
+							{
+								typeOverlay.setPlayer1Tiles();
+								remove(player2Text);
+								add(player1Text);
+							}
+							else
+							{
+								typeOverlay.setPlayer2Tiles();
+								remove(player1Text);
+								add(player2Text);
+							}
+						}					
 					}
 					else
 					{
+						map.setPoint(player % 2 +1, 10, posx, posy);
+						typeOverlay.setWrongPlace(player, posx, posy);
+						typeOverlay.reset();
 						player1 = !player1;
 						if (player1)
 						{
+							typeOverlay.setPlayer1Tiles();
 							remove(player2Text);
 							add(player1Text);
 						}
 						else
 						{
+							typeOverlay.setPlayer2Tiles();
 							remove(player1Text);
 							add(player2Text);
 						}
 					}
 				}
+				typeOverlay.printPlayer1Field();
+				trace("-------------------");
+				typeOverlay.printPlayer2Field();
+				trace("-------------------");
 			}
 		}
 	}
