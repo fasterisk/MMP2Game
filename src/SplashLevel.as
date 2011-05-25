@@ -32,11 +32,8 @@ package
 			slogan3 = new MyText("The Battleship-Game on land with landcover validation.", 120, 570, 0xFF000000, 16);
 			add(slogan3);
 			addGraphic(new Image(ACHMED), 1, 120, 100);
-			
-
-			
-			
 		}
+		
 	}
 	
 }
