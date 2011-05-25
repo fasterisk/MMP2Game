@@ -20,6 +20,8 @@ package
 		private var type:int;
 		
 		private var player1:Boolean;
+		private var player1HasToFind:int;
+		private var player2HasToFind:int;
 		
 		private var validateCounter:int;
 		private var validationArray:Array;
@@ -47,6 +49,9 @@ package
 		private var actual:MyText;
 		private var player1Text:MyText;
 		private var player2Text:MyText;
+		private var remaining:MyText;
+		private var player1HasToFindText:MyText;
+		private var player2HasToFindText:MyText;
 		
 		private var map:Map;
 		private var overlayArray:Array;
@@ -88,6 +93,7 @@ package
 			confirm = new MyText("CONFIRM", 420, 300,0xFF400000, 28);
 			player1Text = new MyText("Player 1", 420, 300, 0xFF400000, 28);
 			player2Text = new MyText("Player 2", 420, 300, 0xFF400000, 28);
+			remaining = new MyText("Remaining:", 420, 330, 0xFF400000, 28);
 						
 			var gameTitle:Text = new Text("BattleBunker", 420, 10);
 			gameTitle.color = 0xFF400000;
@@ -326,8 +332,28 @@ package
 			{
 				remove(hideouts[i]);
 			}
+			player1HasToFind = 0;
+			player2HasToFind = 0;
+			for (var j:int = 0; j < 10; j++)
+			{
+				for (var k:int = 0; k < 10; k++)
+				{
+					if (map.getPoint(1, j, k) > 0 && map.getPoint(1, j, k) < 11)
+					{
+						player2HasToFind++;
+					}
+					if (map.getPoint(2, j, k) > 0 && map.getPoint(2, j, k) < 11)
+					{
+						player1HasToFind++;
+					}
+				}
+			}
+			player1HasToFindText = new MyText("" + player1HasToFind, 420, 360, 0xF400000, 28);
+			player2HasToFindText = new MyText("" + player2HasToFind, 420, 360, 0xF400000, 28);
 			typeOverlay.reset();
 			add(player1Text);
+			add(player1HasToFindText);
+			add(remaining);
 			phase = 5;
 		}
 		
@@ -362,6 +388,20 @@ package
 							typeOverlay.setField(player, posx, posy);
 							map.setPoint(player % 2 + 1, typeOverlay.getType() + 10, posx, posy);
 							sound.playExplosion();
+							if (player == 1)
+							{
+								player1HasToFind--;
+								remove(player1HasToFindText);
+								player1HasToFindText = new MyText("" + player1HasToFind, 420, 360, 0xF400000, 28);
+								add(player1HasToFindText)
+							}
+							else
+							{
+								player2HasToFind--;
+								remove(player2HasToFindText);
+								player2HasToFindText = new MyText("" + player2HasToFind, 420, 360, 0xF400000, 28);
+								add(player2HasToFindText)
+							}
 						}
 						else
 						{
@@ -378,9 +418,9 @@ package
 						map.setPoint(player % 2 +1, 10, posx, posy);
 						typeOverlay.setWrongPlace(player, posx, posy);
 						locked = true;
-						var timer:Timer = new Timer(2000, 1);
-						timer.addEventListener("timer", changePlayer);
-						timer.start();
+						var timer2:Timer = new Timer(2000, 1);
+						timer2.addEventListener("timer", changePlayer);
+						timer2.start();
 						
 					}
 				}
@@ -416,12 +456,16 @@ package
 				typeOverlay.setPlayer1Tiles();
 				remove(player2Text);
 				add(player1Text);
+				remove(player2HasToFindText);
+				add(player1HasToFindText);
 			}
 			else
 			{
 				typeOverlay.setPlayer2Tiles();
 				remove(player1Text);
 				add(player2Text);
+				remove(player1HasToFindText);
+				add(player2HasToFindText);
 			}
 			
 			locked = false;
