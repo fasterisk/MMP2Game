@@ -37,6 +37,12 @@ package
 		[Embed(source = '../images/p2won.png')]
 		private const P2WON:Class;
 		
+		[Embed(source = '../images/clear.png')]
+		private const CLEAR:Class;
+		
+		[Embed(source = '../images/manual.png')]
+		private const MANUAL:Class;
+		
 		[Embed(source = '../images/soundmuted.png')]
 		private const SOUNDMUTED:Class;
 		
@@ -70,6 +76,8 @@ package
 		var gameStatus4:Text;
 		var p1WonImage:Image;
 		var p2WonImage:Image;
+		private var clearImage:Image;
+		private var manualImage:Image;
 		
 		var sound:SoundEngine;
 		var gameOver:Boolean;
@@ -82,6 +90,19 @@ package
 		
 		public function Level():void
 		{
+			p1WonImage = new Image(P1WON);
+			p2WonImage = new Image(P2WON);
+			clearImage = new Image(CLEAR);
+			manualImage = new Image(MANUAL);
+			
+			soundActivatedImage = new Image(SOUNDACTIVATED);
+			soundMutedImage = new Image(SOUNDMUTED);
+			addGraphic(manualImage);
+			phase = 0;
+		}
+		
+		private function startNewGame():void
+		{
 			locked = false;
 			gameOver = false;
 			soundMuted = false;
@@ -91,11 +112,7 @@ package
 			confirm1 = false;
 			
 			validateCounter = 0;
-			p1WonImage = new Image(P1WON);
-			p2WonImage = new Image(P2WON);
 			
-			soundActivatedImage = new Image(SOUNDACTIVATED);
-			soundMutedImage = new Image(SOUNDMUTED);
 			addGraphic(soundMutedImage, 0, 584, 384);
 			addGraphic(soundActivatedImage, 0, 584, 384);
 			soundMutedImage.visible = false;
@@ -170,9 +187,9 @@ package
 			hideout4.rotate();
 			hideout5.rotate();
 			hideout6.rotate();
-			
 			//sound.playStart();
 		}
+		
 		
 		override public function update():void
 		{
@@ -180,8 +197,6 @@ package
 			{
 				if (soundMuted)
 				{
-					
-					
 					soundMuted = false;
 					sound.activateSound();
 					soundMutedImage.visible = false;
@@ -203,6 +218,12 @@ package
 			}
 			switch(phase)
 			{
+				case 0: if (Input.mousePressed)
+						{
+							addGraphic(clearImage);
+							startNewGame();
+						}
+						break;
 				case 1: setGameStatus("PlayerOne,","please place your bunkers."); checkPositions(1); break;
 				case 2: setGameStatus("PlayerOne, map the ground","where you placed your","bunkers with the actual","groundtype."); setTypes(1); break;
 				case 3: setGameStatus("PlayerTwo,","please place your bunkers."); checkPositions(2); break;
@@ -233,8 +254,17 @@ package
 							countValidations();
 							Text.size = 25;
 							add(new MyText("You have successfully validated " + amountValidated + " Locations.", 25, 420, 0xFF000000, 25));
+							add(new MyText("Click to restart the game", 110, 460, 0xFF000000, 25));
 							trace("FINISHED"); 
 							//sound.playVictory();
+						}
+						else
+						{
+							if (Input.mousePressed)
+							{
+								addGraphic(manualImage);
+								phase = 0;
+							}
 						}
 						break;
 						
